@@ -22,14 +22,16 @@ export class UserClient extends ApiClient {
   }
 
   public async getRequestToken(callbackUrl: string) {
-    const url = `${this.baseUrl}/request_token?oauth_callback=${callbackUrl}`;
+    const params = { oauth_callback: callbackUrl };
+    const url = `${this.baseUrl}/oauth/request_token?${qs.stringify(params)}`;
     const headers = this.oAuthClient.toHeader(
       this.oAuthClient.authorize({
         url,
         method: 'POST',
       })
     );
-    return this.post(url, null, { headers });
+
+    return this.post<string>(url, null, { headers }).then(res => qs.parse(res.data));
   }
 
   public setAccessToken(accessToken: string) {
@@ -40,14 +42,14 @@ export class UserClient extends ApiClient {
     });
   }
 
-  public getAccessToken({
+  public async getAccessToken({
     oauthVerifier,
     oauthToken,
   }: {
     [k: string]: string;
   }) {
     const params = { oauth_verifier: oauthVerifier, oauth_token: oauthToken };
-    const url = `${this.baseUrl}/access_token?${qs.stringify(params)}`;
+    const url = `${this.baseUrl}/oauth/access_token?${qs.stringify(params)}`;
 
     const headers = this.oAuthClient.toHeader(
       this.oAuthClient.authorize({
