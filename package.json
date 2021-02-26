@@ -1,0 +1,63 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build && typedoc --out docs",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "bluebirdie",
+  "author": "jaydhelton",
+  "module": "dist/bluebirdie.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/bluebirdie.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/bluebirdie.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.9.2",
+    "husky": "^5.1.1",
+    "size-limit": "^4.9.2",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.1.0",
+    "typedoc": "^0.20.28",
+    "typescript": "^4.2.2"
+  },
+  "dependencies": {
+    "@types/qs": "^6.9.5",
+    "axios": "^0.21.1",
+    "axios-logger": "^2.5.0",
+    "oauth-1.0a": "^2.2.4",
+    "qs": "^6.9.6"
+  }
+}
