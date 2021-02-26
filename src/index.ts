@@ -23,4 +23,3 @@ export class BlueBirdie {
     return this.options.url || `https://api.twitter.com`;
   }
 }
-

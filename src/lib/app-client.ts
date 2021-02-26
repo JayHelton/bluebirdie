@@ -1,4 +1,4 @@
-import qs from 'qs'
+import qs from 'qs';
 import { ApiClient } from './client';
 
 export class AppClient extends ApiClient {
@@ -9,7 +9,7 @@ export class AppClient extends ApiClient {
 
   public setBearerToken(bearerToken: string) {
     this.options.bearerToken = bearerToken;
-    this.client.interceptors.request.use((config) => {
+    this.client.interceptors.request.use(config => {
       config.headers.Authorization = `Bearer ${this.options.bearerToken}`;
       return config;
     });
@@ -18,7 +18,9 @@ export class AppClient extends ApiClient {
   public getBearerToken() {
     const { apiKey, apiSecretKey } = this.options;
     // Must encode the header before sending
-    const encodedToken = Buffer.from(`${apiKey}:${apiSecretKey}`).toString('base64');
+    const encodedToken = Buffer.from(`${apiKey}:${apiSecretKey}`).toString(
+      'base64'
+    );
     const headers = {
       Authorization: `Basic ${encodedToken}`,
       'Content-Type': 'application/x-www-form-urlencoded',

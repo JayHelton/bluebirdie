@@ -27,29 +27,35 @@ export class UserClient extends ApiClient {
       this.oAuthClient.authorize({
         url,
         method: 'POST',
-      }),
+      })
     );
     return this.post(url, null, { headers });
   }
 
   public setAccessToken(accessToken: string) {
     this.options.accessToken = accessToken;
-    this.client.interceptors.request.use((config) => {
+    this.client.interceptors.request.use(config => {
       config.headers.Authorization = `Bearer ${this.options.accessToken}`;
       return config;
     });
   }
 
-  public getAccessToken({ oauthVerifier, oauthToken }: { [k: string]: string }) {
+  public getAccessToken({
+    oauthVerifier,
+    oauthToken,
+  }: {
+    [k: string]: string;
+  }) {
     const params = { oauth_verifier: oauthVerifier, oauth_token: oauthToken };
     const url = `${this.baseUrl}/access_token?${qs.stringify(params)}`;
 
-    const headers = this.oAuthClient.toHeader(this.oAuthClient.authorize({
-      url,
-      method: 'POST',
-    }));
+    const headers = this.oAuthClient.toHeader(
+      this.oAuthClient.authorize({
+        url,
+        method: 'POST',
+      })
+    );
 
-    return this.client.post(url, null, { headers })
-      .then(res => res.data);
+    return this.client.post(url, null, { headers }).then(res => res.data);
   }
 }
