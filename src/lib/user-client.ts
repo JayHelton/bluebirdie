@@ -5,6 +5,11 @@ import { Config } from '..';
 
 import { ApiClient } from './client';
 
+/**
+ * The ApiClient used for making API requests to Twitter on behalf of a user.
+ * If an access token and access token secret are configured, this client will
+ * automatically signed each request using the OAuth1.0a protocol.
+ */
 export class UserClient extends ApiClient {
   private oAuthClient: OAuth;
 
@@ -52,6 +57,12 @@ export class UserClient extends ApiClient {
     });
   }
 
+  /**
+   * Start the OAuth ceremony.
+   * This will return a request token which will be used to send a user
+   * to Twitters authorization server.
+   * @param callbackUrl 
+   */
   public async getRequestToken(callbackUrl: string) {
     const params = { oauth_callback: callbackUrl };
     const url = `${this.config.baseUrl}/oauth/request_token?${qs.stringify(
@@ -66,10 +77,13 @@ export class UserClient extends ApiClient {
     return this.post<string>(url, null, { headers });
   }
 
-  public setAccessToken(accessToken: string) {
-    this.config.accessToken = accessToken;
-  }
-
+  /**
+   * Request an access token and access token secret.
+   * This is done after retrieing an OAuth token and verifier
+   * from Twitters authorization server 
+   * @param options.oauthVerifier
+   * @param options.oauthToken
+   */
   public async getAccessToken({
     oauthVerifier,
     oauthToken,
@@ -89,5 +103,22 @@ export class UserClient extends ApiClient {
     );
 
     return this.post(url, null, { headers });
+  }
+
+  /**
+   * Set a new accessToken on the configuration
+   * @param accessToken
+   */
+  public setAccessToken(accessToken: string) {
+    this.config.accessToken = accessToken;
+  }
+
+
+  /**
+   * Set a new accessTokenSecret on the configuration
+   * @param accessTokenSecret
+   */
+  public setAccessTokenSecret(accessTokenSecret: string) {
+    this.config.accessTokenSecret = accessTokenSecret;
   }
 }

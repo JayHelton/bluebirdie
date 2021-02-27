@@ -17,7 +17,8 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && typedoc --out docs",
+    "build": "tsdx build",
+    "docs": "typedoc --out docs",
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",

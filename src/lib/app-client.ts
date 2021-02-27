@@ -1,6 +1,10 @@
 import { Config } from '..';
 import { ApiClient } from './client';
 
+/**
+ * The ApiClient used for making API requests to Twitter on behalf of an application.
+ * If a bearer token exists in the config, it is automatically added as an authorization header.
+ */
 export class AppClient extends ApiClient {
   constructor(public config: Config) {
     super(config);
@@ -13,10 +17,17 @@ export class AppClient extends ApiClient {
     });
   }
 
+  /**
+   * Set a new bearer token
+   * @param bearerToken 
+   */
   public setBearerToken(bearerToken: string) {
     this.config.bearerToken = bearerToken;
   }
 
+  /**
+   * Request for a new bearer token.
+   */
   public getBearerToken() {
     const { apiKey, apiSecretKey } = this.config;
     // Must encode the header before sending
