@@ -4,14 +4,17 @@ export class AppClient extends ApiClient {
   // TODO(jayhelton) create options interface
   constructor(public config: any) {
     super(config.baseUrl);
+
+    this.client.interceptors.request.use(request => {
+      if (this.config.bearerToken) {
+        request.headers.Authorization = `Bearer ${this.config.bearerToken}`;
+      }
+      return request;
+    });
   }
 
   public setBearerToken(bearerToken: string) {
     this.config.bearerToken = bearerToken;
-    this.client.interceptors.request.use(config => {
-      config.headers.Authorization = `Bearer ${this.config.bearerToken}`;
-      return config;
-    });
   }
 
   public getBearerToken() {
@@ -28,6 +31,6 @@ export class AppClient extends ApiClient {
       grant_type: 'client_credentials',
     }, {
       headers,
-    }).then(res => res.data);
+    });
   }
 }

@@ -21,6 +21,6 @@ export class BlueBirdie {
   }
 
   private getUrl(): string {
-    return this.options.url || `https://api.twitter.com`;
+    return this.config.url || `https://api.twitter.com`;
   }
 }

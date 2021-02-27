@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import OAuth from 'oauth-1.0a';
+import OAuth, { RequestOptions } from 'oauth-1.0a';
 import qs from 'qs';
 
 import { ApiClient } from './client';
@@ -21,21 +21,34 @@ export class UserClient extends ApiClient {
       },
     });
 
-    this.client.interceptors.request.use(config => {
+    this.client.interceptors.request.use(request => {
       if (this.config.accessToken && this.config.accessTokenSecret) {
+        const params: RequestOptions = {
+          url: request.baseURL! + request.url!,
+          method: request.method?.toUpperCase()!,
+        };
+
+        switch (params.method) {
+          case 'GET': {
+            params.url = `${params.url}?${request?.paramsSerializer && request?.paramsSerializer(request.params)}`;
+            break;
+          }
+          default: {
+            params.data = qs.parse(config.data);
+            break;
+          }
+        }
+
+        console.log({ params, requestParams: request.params })
         const headers = this.oAuthClient.toHeader(
-          this.oAuthClient.authorize({
-            url: config.baseURL! + config.url!,
-            method: config.method?.toUpperCase()!,
-            data: qs.parse(config.data),
-          }, {
+          this.oAuthClient.authorize(params, {
             key: this.config.accessToken,
             secret: this.config.accessTokenSecret,
           })
         );
-        config.headers['Authorization'] = headers.Authorization;
+        request.headers['Authorization'] = headers.Authorization;
       }
-      return config;
+      return request;
     });
   }
 
@@ -48,7 +61,7 @@ export class UserClient extends ApiClient {
         method: 'POST',
       })
     );
-    return this.post<string>(url, null, { headers }).then(res => qs.parse(res.data));
+    return this.post<string>(url, null, { headers });
   }
 
   public setAccessToken(accessToken: string) {
@@ -71,6 +84,6 @@ export class UserClient extends ApiClient {
       })
     );
 
-    return this.post(url, null, { headers }).then(res => res.data);
+    return this.post(url, null, { headers });
   }
 }
