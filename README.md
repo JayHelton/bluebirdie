@@ -89,6 +89,7 @@ twitter.user.get('/2/tweets', {
 > Twitters API v2 supports streaming for Applications and User Contexts. The version 1 API only allows streaming from the User Context.
 
 <h4> Version 2 </h4>
+<br/>
 
 ```javascript
   const rules = [{
@@ -113,6 +114,7 @@ twitter.user.get('/2/tweets', {
 ```
 
 <h4> Version 1 </h4>
+<br/>
 
 ```javascript
 // Currently, there is a manual baseURL override, since version 1 api is on a different domain. If the bluebird client instance is only going to be used for version 1 stream, the domain can be set in the config.
