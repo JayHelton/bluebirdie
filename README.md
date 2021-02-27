@@ -84,11 +84,11 @@ twitter.user.get('/2/tweets', {
 ```
 <br/>
 
-<h3> Streaming Examples <h3/>
+<h3> Streaming Examples </h3>
 
 > Twitters API v2 supports streaming for Applications and User Contexts. The version 1 API only allows streaming from the User Context.
 
-<h4> Version 2 <h4/>
+<h4> Version 2 </h4>
 
 ```javascript
   const rules = [{
