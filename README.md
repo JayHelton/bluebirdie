@@ -112,7 +112,7 @@ twitter.user.get('/2/tweets', {
   })
 ```
 
-<h4> Version 1 <h4/>
+<h4> Version 1 </h4>
 
 ```javascript
 // Currently, there is a manual baseURL override, since version 1 api is on a different domain. If the bluebird client instance is only going to be used for version 1 stream, the domain can be set in the config.
