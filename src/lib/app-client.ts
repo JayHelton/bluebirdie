@@ -19,7 +19,7 @@ export class AppClient extends ApiClient {
 
   /**
    * Set a new bearer token
-   * @param bearerToken 
+   * @param bearerToken
    */
   public setBearerToken(bearerToken: string) {
     this.config.bearerToken = bearerToken;

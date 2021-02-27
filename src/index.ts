@@ -72,7 +72,4 @@ export class BlueBirdie {
   }
 }
 
-export {
-  AppClient,
-  UserClient,
-};
+export { AppClient, UserClient };

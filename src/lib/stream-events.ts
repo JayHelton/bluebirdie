@@ -7,7 +7,7 @@ export class StreamEventEmitter extends EventEmitter {
         try {
           const json = JSON.parse(data);
           this.emit('data', json);
-        } catch (e) { }
+        } catch (e) {}
       })
       .on('error', (error: { code: string }) => {
         this.emit('error', error);

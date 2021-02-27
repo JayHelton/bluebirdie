@@ -48,8 +48,8 @@ export class ApiClient {
   // TODO(jayhelton) have a better client interface for error handling
   /**
    * A generic GET request.
-   * @param url 
-   * @param config 
+   * @param url
+   * @param config
    */
   public get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
     return this.client.get<T>(url, config).then(res => res.data);
@@ -57,9 +57,9 @@ export class ApiClient {
 
   /**
    * A generic POST request
-   * @param url 
-   * @param body 
-   * @param config 
+   * @param url
+   * @param body
+   * @param config
    */
   public post<T>(
     url: string,
@@ -72,9 +72,9 @@ export class ApiClient {
   /**
    * A POST request which stringifys the body.
    * This submits application/x-www-form-urlencoded content-type
-   * @param url 
-   * @param body 
-   * @param config 
+   * @param url
+   * @param body
+   * @param config
    */
   public postForm<T>(
     url: string,
@@ -89,9 +89,9 @@ export class ApiClient {
 
   /**
    * A generic PUT request
-   * @param url 
-   * @param body 
-   * @param config 
+   * @param url
+   * @param body
+   * @param config
    */
   public put<T>(
     url: string,
@@ -104,9 +104,9 @@ export class ApiClient {
   /**
    * A PUT request which stringifys the body.
    * This submits application/x-www-form-urlencoded content-type
-   * @param url 
-   * @param body 
-   * @param config 
+   * @param url
+   * @param body
+   * @param config
    */
   public putForm<T>(
     url: string,
@@ -122,25 +122,27 @@ export class ApiClient {
   /**
    * Creates an event emitter stream from a POST request.
    * This application/x-www-form-urlencoded content-type.
-   * @param url 
-   * @param body 
-   * @param config 
+   * @param url
+   * @param body
+   * @param config
    */
   public async postStream(
     url: string,
     body: any,
     config: AxiosRequestConfig = {}
   ): Promise<StreamEventEmitter> {
-    const stream = await this.postForm(url, body, { ...config, responseType: 'stream' });
+    const stream = await this.postForm(url, body, {
+      ...config,
+      responseType: 'stream',
+    });
     return new StreamEventEmitter(stream);
-
   }
 
   /**
    * Creates an event emitter stream from a GET request.
    * This application/x-www-form-urlencoded content-type.
-   * @param url 
-   * @param config 
+   * @param url
+   * @param config
    */
   public async getStream(
     url: string,

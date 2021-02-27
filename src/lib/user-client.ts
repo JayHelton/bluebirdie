@@ -61,7 +61,7 @@ export class UserClient extends ApiClient {
    * Start the OAuth ceremony.
    * This will return a request token which will be used to send a user
    * to Twitters authorization server.
-   * @param callbackUrl 
+   * @param callbackUrl
    */
   public async getRequestToken(callbackUrl: string) {
     const params = { oauth_callback: callbackUrl };
@@ -80,7 +80,7 @@ export class UserClient extends ApiClient {
   /**
    * Request an access token and access token secret.
    * This is done after retrieing an OAuth token and verifier
-   * from Twitters authorization server 
+   * from Twitters authorization server
    * @param options.oauthVerifier
    * @param options.oauthToken
    */
@@ -112,7 +112,6 @@ export class UserClient extends ApiClient {
   public setAccessToken(accessToken: string) {
     this.config.accessToken = accessToken;
   }
-
 
   /**
    * Set a new accessTokenSecret on the configuration

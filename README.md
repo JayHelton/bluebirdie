@@ -84,11 +84,52 @@ twitter.user.get('/2/tweets', {
 ```
 <br/>
 
+<h3> Streaming Examples <h3/>
+
+> Twitters API v2 supports streaming for Applications and User Contexts. The version 1 API only allows streaming from the User Context.
+
+<h4> Version 2 <h4/>
+
+```javascript
+  const rules = [{
+    'value': 'dog has:images -is:retweet',
+    'tag': 'dog pictures'
+  },
+  {
+    'value': 'cat has:images -grumpy',
+    'tag': 'cat pictures'
+  },
+  ];
+
+  await twitter.app.post('/2/tweets/search/stream/rules', { add: rules });
+
+  // This can be twitter.user or twitter.app
+  const stream = await twitter.app.getStream('/2/tweets/search/stream');
+  stream.on('data', (data) => {
+    console.log({ yay: data });
+  }).on('error', (err) => {
+    console.log(err);
+  })
+```
+
+<h4> Version 1 <h4/>
+
+```javascript
+// Currently, there is a manual baseURL override, since version 1 api is on a different domain. If the bluebird client instance is only going to be used for version 1 stream, the domain can be set in the config.
+await stream = twitter.user.postStream('/1.1/statuses/filter.json', { track: 'jojo' }, { baseURL: 'https://stream.twitter.com' });
+
+stream.on('data', (data) => {
+  console.log({ yay: data });
+}).on('error', (err) => {
+  console.log(err);
+})
+```
+
 <h3> Upcoming Examples</h3>
 <ul>
   <li>Requesting Bearer Tokens and Access Tokens</li>
   <li>Full User OAuth Flow Example</li>
-  <li>Streaming Examples (streaming API is under heavy construction)</li>
+  <li>More Streaming Examples (streaming API is under heavy construction)</li>
 </ul>
 
 <h3> Upcoming for BlueBirdie</h3>
