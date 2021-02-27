@@ -129,12 +129,13 @@
 <span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">resultTwo:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> }));</span>
 </code></pre>
 				<br/>
-				<h3> Streaming Examples <h3/>
-						<blockquote>
-							<p>Twitters API v2 supports streaming for Applications and User Contexts. The version 1 API only allows streaming from the User Context.</p>
-						</blockquote>
-						<h4> Version 2 <h4/>
-								<pre><code class="language-javascript"><span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">rules</span><span style="color: #000000"> = [{</span>
+				<h3> Streaming Examples </h3>
+				<blockquote>
+					<p>Twitters API v2 supports streaming for Applications and User Contexts. The version 1 API only allows streaming from the User Context.</p>
+				</blockquote>
+				<h4> Version 2 </h4>
+				<br/>
+				<pre><code class="language-javascript"><span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">rules</span><span style="color: #000000"> = [{</span>
 <span style="color: #000000">    </span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dog has:images -is:retweet&#039;</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #A31515">&#039;tag&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dog pictures&#039;</span>
 <span style="color: #000000">  },</span>
@@ -154,8 +155,9 @@
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000">);</span>
 <span style="color: #000000">  })</span>
 </code></pre>
-								<h4> Version 1 <h4/>
-										<pre><code class="language-javascript"><span style="color: #008000">// Currently, there is a manual baseURL override, since version 1 api is on a different domain. If the bluebird client instance is only going to be used for version 1 stream, the domain can be set in the config.</span>
+				<h4> Version 1 </h4>
+				<br/>
+				<pre><code class="language-javascript"><span style="color: #008000">// Currently, there is a manual baseURL override, since version 1 api is on a different domain. If the bluebird client instance is only going to be used for version 1 stream, the domain can be set in the config.</span>
 <span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">stream</span><span style="color: #000000"> = </span><span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">user</span><span style="color: #000000">.</span><span style="color: #795E26">postStream</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/1.1/statuses/filter.json&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">track:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;jojo&#039;</span><span style="color: #000000"> }, { </span><span style="color: #001080">baseURL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://stream.twitter.com&#039;</span><span style="color: #000000"> });</span>
 
 <span style="color: #001080">stream</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;data&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">data</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
@@ -164,24 +166,24 @@
 <span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000">);</span>
 <span style="color: #000000">})</span>
 </code></pre>
-										<h3> Upcoming Examples</h3>
-										<ul>
-											<li>Requesting Bearer Tokens and Access Tokens</li>
-											<li>Full User OAuth Flow Example</li>
-											<li>More Streaming Examples (streaming API is under heavy construction)</li>
-										</ul>
-										<h3> Upcoming for BlueBirdie</h3>
-										<ul>
-											<li>Lots of test writing</li>
-											<li>Better Exmaples</li>
-											<li>A Simpler Streaming API without 3rd party depedencies</li>
-											<li>I am also brainstorming some ideas for easy abstractions on common use cases that would other be reimplemented in each project</li>
-										</ul>
-										<h3>Contributing</h3>
-										Contributors are always welcome! I would love new ideas and thoughts. I have a specific direction I am wanting this project to go in.
-										<br/><br/>
-										<h3>License</h3>
-										This project is licensed under the MIT License
+				<h3> Upcoming Examples</h3>
+				<ul>
+					<li>Requesting Bearer Tokens and Access Tokens</li>
+					<li>Full User OAuth Flow Example</li>
+					<li>More Streaming Examples (streaming API is under heavy construction)</li>
+				</ul>
+				<h3> Upcoming for BlueBirdie</h3>
+				<ul>
+					<li>Lots of test writing</li>
+					<li>Better Exmaples</li>
+					<li>A Simpler Streaming API without 3rd party depedencies</li>
+					<li>I am also brainstorming some ideas for easy abstractions on common use cases that would other be reimplemented in each project</li>
+				</ul>
+				<h3>Contributing</h3>
+				Contributors are always welcome! I would love new ideas and thoughts. I have a specific direction I am wanting this project to go in.
+				<br/><br/>
+				<h3>License</h3>
+				This project is licensed under the MIT License
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
