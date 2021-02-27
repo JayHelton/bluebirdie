@@ -34,12 +34,11 @@ export class UserClient extends ApiClient {
             break;
           }
           default: {
-            params.data = qs.parse(config.data);
+            params.data = qs.parse(request.data);
             break;
           }
         }
 
-        console.log({ params, requestParams: request.params })
         const headers = this.oAuthClient.toHeader(
           this.oAuthClient.authorize(params, {
             key: this.config.accessToken,
