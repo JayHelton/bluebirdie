@@ -59,37 +59,129 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<!-- <p align="center"><img src="logo.png" /></p> -->
-				<h1 align="center"> BlueBirdie </h1>
+				<h1 align="center"> BlueBirdie 🐦</h1>
 				<p align="center"> A modern client for the Twitter API </p>
 				<hr/>
-				<p> Describe you project  </p>
+				<blockquote>
+					<p>BlueBirdie is very new and still in it&#39;s <em><strong>experimental</strong></em> phase. Especially with the streaming. Until the 1.0 release, this library is highly likely to change. All parts of BlueBirdie are under construction.</p>
+				</blockquote>
+				<p>BlueBirdie is yet another NodeJS interface for the Twitter API. Why did I make it? Because the other 3 libraries I found were not being maintained and I felt I could actually keep up with this one. With the upcoming Version 2 of the Twitter API, I wanted to be sure that a library can support that, as well as the painful way developers have to interact with Twitters Version 1 API. Why should you use this?</p>
 				<ul>
-					<li>Beautiful Starter Template for README.md</li>
-					<li>Key feature num. 2</li>
-					<li>Key feature num. 3</li>
-					<li>Key feature num. 4</li>
+					<li>A clear abstraction between the Application and User Authentication Types</li>
+					<li>Support for Version 1 endpoints.</li>
+					<li>Support for Version 2 endpoints.</li>
+					<li>Nice abstraction of the OAuth authentication requirements.</li>
+					<li>Easy to use Streaming API.</li>
 				</ul>
-				<h3> Code Demo </h3>
-				<pre><code class="language-html">
-<span style="color: #000000">We will use markdown for the Syntax Highlighting</span>
+				<h3> Download & Installation </h3>
+				<pre><code class="language-shell"><span style="color: #000000">$ yarn add bluebirdie</span>
+</code></pre>
+				<h3> Application Example </h3>
+				<pre><code class="language-javascript">
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">twitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">BlueBirdie</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;api_key&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiSecretKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;api_secret_key&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">bearerToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;bearer_token&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">})</span>
 
-<span style="color: #800000">&lt;ul&gt;</span>
-<span style="color: #000000">  </span><span style="color: #800000">&lt;li&gt;</span><span style="color: #000000">Beautiful Starter Template for README.md</span><span style="color: #800000">&lt;/li&gt;</span>
-<span style="color: #000000">  </span><span style="color: #800000">&lt;li&gt;</span><span style="color: #000000">Key feature num. 2</span><span style="color: #800000">&lt;/li&gt;</span>
-<span style="color: #000000">  </span><span style="color: #800000">&lt;li&gt;</span><span style="color: #000000">Key feature num. 3</span><span style="color: #800000">&lt;/li&gt;</span>
-<span style="color: #000000">  </span><span style="color: #800000">&lt;li&gt;</span><span style="color: #000000">Key feature num. 4</span><span style="color: #800000">&lt;/li&gt;</span>
-<span style="color: #800000">&lt;/ul&gt;</span>
+<span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/1.1/statuses/lookup.json&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">params:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;1278747501642657792&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;1255542774432063488&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">resultOne:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> }));</span>
+
+<span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/2/tweets&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">params:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;ids&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;1278747501642657792&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;1255542774432063488&quot;</span><span style="color: #000000">], </span><span style="color: #008000">// Edit Tweet IDs to look up</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;tweet.fields&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;lang&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;author_id&quot;</span><span style="color: #000000">], </span><span style="color: #008000">// Edit optional query parameters here</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;user.fields&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;created_at&quot;</span><span style="color: #000000"> </span><span style="color: #008000">// Edit optional query parameters here</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">resultTwo:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> }));</span>
 
 </code></pre>
-				<h3> Download & Installation </h3>
-				<pre><code class="language-shell"><span style="color: #000000">$ npm i boilerplate-readme-template</span>
+				<h3> User Example </h3>
+				<pre><code class="language-javascript">
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">twitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">BlueBirdie</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;api_key&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">apiSecretKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;api_secret_key&#039;</span><span style="color: #000000">,,</span>
+<span style="color: #000000">  </span><span style="color: #001080">accessToken:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;access_token&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">accessTokenSecret:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;access_token_secret&#039;</span>
+<span style="color: #000000">})</span>
+
+<span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">user</span><span style="color: #000000">.</span><span style="color: #795E26">postForm</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;/1.1/statuses/update.json&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">status:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;testing 12345&#039;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">results</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;results&quot;</span><span style="color: #000000">, </span><span style="color: #001080">results</span><span style="color: #000000">);</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">err</span><span style="color: #000000"> }))</span>
+
+<span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">user</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/1.1/statuses/lookup.json&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">params:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;1278747501642657792&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;1255542774432063488&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">resultOne:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> }));</span>
+
+<span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">user</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/2/tweets&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">params:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;ids&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;1278747501642657792&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;1255542774432063488&quot;</span><span style="color: #000000">], </span><span style="color: #008000">// Edit Tweet IDs to look up</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;tweet.fields&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;lang&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;author_id&quot;</span><span style="color: #000000">], </span><span style="color: #008000">// Edit optional query parameters here</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;user.fields&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;created_at&quot;</span><span style="color: #000000"> </span><span style="color: #008000">// Edit optional query parameters here</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">resultTwo:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> }));</span>
 </code></pre>
 				<br/>
-				<h3>Contributing</h3>
-				Contributors are always welcome!
-				<br/><br/>
-				<h3>License</h3>
-				<p>This project is licensed under the MIT License</p>
+				<h3> Streaming Examples <h3/>
+						<blockquote>
+							<p>Twitters API v2 supports streaming for Applications and User Contexts. The version 1 API only allows streaming from the User Context.</p>
+						</blockquote>
+						<h4> Version 2 <h4/>
+								<pre><code class="language-javascript"><span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">rules</span><span style="color: #000000"> = [{</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dog has:images -is:retweet&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;tag&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dog pictures&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  {</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;cat has:images -grumpy&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;tag&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;cat pictures&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  ];</span>
+
+<span style="color: #000000">  </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/2/tweets/search/stream/rules&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">add:</span><span style="color: #000000"> </span><span style="color: #001080">rules</span><span style="color: #000000"> });</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// This can be twitter.user or twitter.app</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">stream</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">getStream</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/2/tweets/search/stream&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">  </span><span style="color: #001080">stream</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;data&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">data</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">yay:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> });</span>
+<span style="color: #000000">  }).</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000">);</span>
+<span style="color: #000000">  })</span>
+</code></pre>
+								<h4> Version 1 <h4/>
+										<pre><code class="language-javascript"><span style="color: #008000">// Currently, there is a manual baseURL override, since version 1 api is on a different domain. If the bluebird client instance is only going to be used for version 1 stream, the domain can be set in the config.</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">stream</span><span style="color: #000000"> = </span><span style="color: #001080">twitter</span><span style="color: #000000">.</span><span style="color: #001080">user</span><span style="color: #000000">.</span><span style="color: #795E26">postStream</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/1.1/statuses/filter.json&#039;</span><span style="color: #000000">, { </span><span style="color: #001080">track:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;jojo&#039;</span><span style="color: #000000"> }, { </span><span style="color: #001080">baseURL:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://stream.twitter.com&#039;</span><span style="color: #000000"> });</span>
+
+<span style="color: #001080">stream</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;data&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">data</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">yay:</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> });</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">err</span><span style="color: #000000">);</span>
+<span style="color: #000000">})</span>
+</code></pre>
+										<h3> Upcoming Examples</h3>
+										<ul>
+											<li>Requesting Bearer Tokens and Access Tokens</li>
+											<li>Full User OAuth Flow Example</li>
+											<li>More Streaming Examples (streaming API is under heavy construction)</li>
+										</ul>
+										<h3> Upcoming for BlueBirdie</h3>
+										<ul>
+											<li>Lots of test writing</li>
+											<li>Better Exmaples</li>
+											<li>A Simpler Streaming API without 3rd party depedencies</li>
+											<li>I am also brainstorming some ideas for easy abstractions on common use cases that would other be reimplemented in each project</li>
+										</ul>
+										<h3>Contributing</h3>
+										Contributors are always welcome! I would love new ideas and thoughts. I have a specific direction I am wanting this project to go in.
+										<br/><br/>
+										<h3>License</h3>
+										This project is licensed under the MIT License
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

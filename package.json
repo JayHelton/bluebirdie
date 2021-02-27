@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "repository": "jayhelton/bluebirdie",
   "homepage": "https://github.com/jayhelton/bluebirdie",
-  "description": "A modern client for Twitters API",
+  "description": "A modern client for Twitter's API",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
