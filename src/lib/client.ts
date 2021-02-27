@@ -28,19 +28,18 @@ export class ApiClient {
 
     if (config.requestLogger) {
       this.client.interceptors.request.use(request => {
-        return config.requestLogger
-          && config.requestLogger(request)
-          || request;
+        return (
+          (config.requestLogger && config.requestLogger(request)) || request
+        );
       });
     }
     if (config.responseLogger) {
       this.client.interceptors.response.use(response => {
-        return config.responseLogger
-          && config.responseLogger(response)
-          || response;
+        return (
+          (config.responseLogger && config.responseLogger(response)) || response
+        );
       });
     }
-
   }
 
   // TODO(jayhelton) have a better client interface for error handling
@@ -99,7 +98,7 @@ export class ApiClient {
               try {
                 const json = JSON.parse(data);
                 subscriber.next(json);
-              } catch (e) { }
+              } catch (e) {}
             })
             .on('error', (error: { code: string }) => {
               subscriber.error(error);
@@ -126,7 +125,7 @@ export class ApiClient {
               try {
                 const json = JSON.parse(data);
                 subscriber.next(json);
-              } catch (e) { }
+              } catch (e) {}
             })
             .on('error', (error: { code: string }) => {
               subscriber.error(error);
