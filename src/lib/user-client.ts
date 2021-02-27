@@ -30,7 +30,8 @@ export class UserClient extends ApiClient {
 
         switch (params.method) {
           case 'GET': {
-            params.url = `${params.url}?${request?.paramsSerializer && request?.paramsSerializer(request.params)}`;
+            params.url = `${params.url}?${request?.paramsSerializer &&
+              request?.paramsSerializer(request.params)}`;
             break;
           }
           default: {

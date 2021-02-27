@@ -21,7 +21,7 @@ export class ApiClient {
           }
         }
         return searchParams.toString();
-      }
+      },
     };
 
     this.client = axios.create(options);
@@ -39,95 +39,70 @@ export class ApiClient {
     // });
   }
 
-  // private parseV1Buffer(buffer: Bugge, onParse, onError) {
-  //   buffer += buffer.toString('utf8');
-  //   let index;
-  //   let json;
-
-  //   while ((index = buffer.indexOf(END)) > -1) {
-  //     json = buffer.slice(0, index);
-  //     buffer = buffer.slice(index + END_LENGTH);
-  //     if (json.length > 0) {
-  //       try {
-  //         json = JSON.parse(json);
-  //         onParse(json);
-  //       } catch (error) {
-  //         error.source = json;
-  //         onError(error);
-  //       }
-  //     }
-  //   }
-  // }
-
   // TODO(jayhelton) have a better client interface for data and error handling
-  public get<T>(
-    url: string,
-    config: AxiosRequestConfig = {},
-  ): Promise<T> {
-    return this.client.get<T>(url, config)
-      .then(res => res.data);
+  public get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
+    return this.client.get<T>(url, config).then(res => res.data);
   }
 
   public post<T>(
     url: string,
     body: any,
-    config: AxiosRequestConfig = {},
+    config: AxiosRequestConfig = {}
   ): Promise<T> {
-    return this.client.post<T>(url, body, config)
-      .then(res => res.data);
+    return this.client.post<T>(url, body, config).then(res => res.data);
   }
 
   public postForm<T>(
     url: string,
     body: any,
-    config: AxiosRequestConfig = {},
+    config: AxiosRequestConfig = {}
   ): Promise<T> {
     config.headers = config.headers || {};
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     body = qs.stringify(body);
-    return this.client.post<T>(url, body, config)
-      .then(res => res.data);
+    return this.client.post<T>(url, body, config).then(res => res.data);
   }
 
   public put<T>(
     url: string,
     body: any,
-    config: AxiosRequestConfig = {},
+    config: AxiosRequestConfig = {}
   ): Promise<T> {
-    return this.client.put<T>(url, body, config)
-      .then(res => res.data);
+    return this.client.put<T>(url, body, config).then(res => res.data);
   }
 
   public putForm<T>(
     url: string,
     body: any,
-    config: AxiosRequestConfig = {},
+    config: AxiosRequestConfig = {}
   ): Promise<T> {
     config.headers = config.headers || {};
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     body = qs.stringify(body);
-    return this.client.put<T>(url, body, config)
-      .then(res => res.data);
+    return this.client.put<T>(url, body, config).then(res => res.data);
   }
 
   public postStream(
     url: string,
     body: any,
-    config: AxiosRequestConfig = {},
+    config: AxiosRequestConfig = {}
   ): Observable<any> {
     const observable = new Observable(subscriber => {
       this.postForm(url, body, { ...config, responseType: 'stream' })
         .then((stream: any) => {
-          stream.on('data', (data: string) => {
-            try {
-              const json = JSON.parse(data);
-              subscriber.next(json);
-            } catch (e) { }
-          }).on('error', (error: { code: string; }) => {
-            subscriber.error(error);
-            subscriber.complete();
-          });
-        }).catch(error => {
+          stream
+            .on('data', (data: string) => {
+              try {
+                const json = JSON.parse(data);
+                subscriber.next(json);
+              } catch (e) {}
+            })
+            .on('error', (error: { code: string }) => {
+              subscriber.error(error);
+              subscriber.complete();
+            });
+        })
+        .catch(error => {
           subscriber.error(error);
           subscriber.complete();
         });
@@ -137,20 +112,23 @@ export class ApiClient {
 
   public getStream(
     url: string,
-    config: AxiosRequestConfig = {},
+    config: AxiosRequestConfig = {}
   ): Observable<any> {
     const observable = new Observable(subscriber => {
       this.get(url, { ...config, responseType: 'stream' })
         .then((stream: any) => {
-          stream.on('data', (data: string) => {
-            try {
-              const json = JSON.parse(data);
-              subscriber.next(json);
-            } catch (e) { }
-          }).on('error', (error: { code: string; }) => {
-            subscriber.error(error);
-          });
-        }).catch(subscriber.error);
+          stream
+            .on('data', (data: string) => {
+              try {
+                const json = JSON.parse(data);
+                subscriber.next(json);
+              } catch (e) {}
+            })
+            .on('error', (error: { code: string }) => {
+              subscriber.error(error);
+            });
+        })
+        .catch(subscriber.error);
     });
     return observable;
   }

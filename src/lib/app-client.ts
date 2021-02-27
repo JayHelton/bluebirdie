@@ -27,10 +27,14 @@ export class AppClient extends ApiClient {
       Authorization: `Basic ${encodedToken}`,
     };
 
-    return this.post('/oauth2/token', {
-      grant_type: 'client_credentials',
-    }, {
-      headers,
-    });
+    return this.post(
+      '/oauth2/token',
+      {
+        grant_type: 'client_credentials',
+      },
+      {
+        headers,
+      }
+    );
   }
 }
