@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
-import { Observable } from 'rxjs';
 import { Config } from '..';
+import { StreamEventEmitter } from './stream-events';
 
 /**
  * The generic APIClient used by BlueBirder.
@@ -120,66 +120,33 @@ export class ApiClient {
   }
 
   /**
-   * Creates a stream from a POST request.
+   * Creates an event emitter stream from a POST request.
    * This application/x-www-form-urlencoded content-type.
    * @param url 
    * @param body 
    * @param config 
    */
-  public postStream(
+  public async postStream(
     url: string,
     body: any,
     config: AxiosRequestConfig = {}
-  ): Observable<any> {
-    const observable = new Observable(subscriber => {
-      this.postForm(url, body, { ...config, responseType: 'stream' })
-        .then((stream: any) => {
-          stream
-            .on('data', (data: string) => {
-              try {
-                const json = JSON.parse(data);
-                subscriber.next(json);
-              } catch (e) { }
-            })
-            .on('error', (error: { code: string }) => {
-              subscriber.error(error);
-              subscriber.complete();
-            });
-        })
-        .catch(error => {
-          subscriber.error(error);
-          subscriber.complete();
-        });
-    });
-    return observable;
+  ): Promise<StreamEventEmitter> {
+    const stream = await this.postForm(url, body, { ...config, responseType: 'stream' });
+    return new StreamEventEmitter(stream);
+
   }
 
   /**
-   * Creates a stream from a GET request.
+   * Creates an event emitter stream from a GET request.
    * This application/x-www-form-urlencoded content-type.
    * @param url 
    * @param config 
    */
-  public getStream(
+  public async getStream(
     url: string,
     config: AxiosRequestConfig = {}
-  ): Observable<any> {
-    const observable = new Observable(subscriber => {
-      this.get(url, { ...config, responseType: 'stream' })
-        .then((stream: any) => {
-          stream
-            .on('data', (data: string) => {
-              try {
-                const json = JSON.parse(data);
-                subscriber.next(json);
-              } catch (e) { }
-            })
-            .on('error', (error: { code: string }) => {
-              subscriber.error(error);
-            });
-        })
-        .catch(subscriber.error);
-    });
-    return observable;
+  ): Promise<StreamEventEmitter> {
+    const stream = await this.get(url, { ...config, responseType: 'stream' });
+    return new StreamEventEmitter(stream);
   }
 }
