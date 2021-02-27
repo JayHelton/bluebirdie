@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import * as AxiosLogger from 'axios-logger';
+import qs from 'qs';
 
 export class ApiClient {
   protected client: AxiosInstance;
@@ -24,7 +25,7 @@ export class ApiClient {
   // TODO(jayhelton) have a better client interface for data and error handling
   public get<T>(
     url: string,
-    config: AxiosRequestConfig = {}
+    config: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
     return this.client.get<T>(url, config);
   }
@@ -32,17 +33,38 @@ export class ApiClient {
   public post<T>(
     url: string,
     body: any,
-    config: AxiosRequestConfig = {}
+    config: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
+    return this.client.post<T>(url, body, config);
+  }
+
+  public postForm<T>(
+    url: string,
+    body: any,
+    config: AxiosRequestConfig = { headers: {} }
+  ): Promise<AxiosResponse<T>> {
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    body = qs.stringify(body);
     return this.client.post<T>(url, body, config);
   }
 
   public put<T>(
     url: string,
-    config: AxiosRequestConfig = {}
+    body: any,
+    config: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
-    return this.client.put<T>(url, config);
+    return this.client.put<T>(url, body, config);
   }
 
-  public stream() {}
+  public putForm<T>(
+    url: string,
+    body: any,
+    config: AxiosRequestConfig = { headers: {} },
+  ): Promise<AxiosResponse<T>> {
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    body = qs.stringify(body);
+    return this.client.put<T>(url, body, config);
+  }
+
+  public stream() { }
 }

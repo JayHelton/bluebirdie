@@ -6,11 +6,12 @@ import { ApiClient } from './client';
 
 export class UserClient extends ApiClient {
   private oAuthClient: OAuth;
+
   // TODO(jayhelton) create options interface
-  constructor(public options: any) {
-    super(options.baseUrl);
+  constructor(public config: any) {
+    super(config.baseUrl);
     this.oAuthClient = new OAuth({
-      consumer: { key: options.apiKey, secret: options.apiSecretKey },
+      consumer: { key: config.apiKey, secret: config.apiSecretKey },
       signature_method: 'HMAC-SHA1',
       hash_function(baseString, key) {
         return crypto
@@ -18,6 +19,23 @@ export class UserClient extends ApiClient {
           .update(baseString)
           .digest('base64');
       },
+    });
+
+    this.client.interceptors.request.use(config => {
+      if (this.config.accessToken && this.config.accessTokenSecret) {
+        const headers = this.oAuthClient.toHeader(
+          this.oAuthClient.authorize({
+            url: config.baseURL! + config.url!,
+            method: config.method?.toUpperCase()!,
+            data: qs.parse(config.data),
+          }, {
+            key: this.config.accessToken,
+            secret: this.config.accessTokenSecret,
+          })
+        );
+        config.headers['Authorization'] = headers.Authorization;
+      }
+      return config;
     });
   }
 
@@ -30,16 +48,11 @@ export class UserClient extends ApiClient {
         method: 'POST',
       })
     );
-
     return this.post<string>(url, null, { headers }).then(res => qs.parse(res.data));
   }
 
   public setAccessToken(accessToken: string) {
-    this.options.accessToken = accessToken;
-    this.client.interceptors.request.use(config => {
-      config.headers.Authorization = `Bearer ${this.options.accessToken}`;
-      return config;
-    });
+    this.config.accessToken = accessToken;
   }
 
   public async getAccessToken({
@@ -58,6 +71,6 @@ export class UserClient extends ApiClient {
       })
     );
 
-    return this.client.post(url, null, { headers }).then(res => res.data);
+    return this.post(url, null, { headers }).then(res => res.data);
   }
 }

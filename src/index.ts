@@ -14,9 +14,10 @@ export class BlueBirdie {
   public user: UserClient;
   public app: AppClient;
 
-  constructor(public options: BlueBirdieConfig) {
-    this.user = new UserClient({ baseUrl: this.getUrl(), ...options });
-    this.app = new AppClient({ baseUrl: this.getUrl(), ...options });
+  constructor(public config: BlueBirdieConfig) {
+    // TODO make specific options
+    this.user = new UserClient({ baseUrl: this.getUrl(), ...config });
+    this.app = new AppClient({ baseUrl: this.getUrl(), ...config });
   }
 
   private getUrl(): string {
