@@ -1,15 +1,15 @@
 import crypto from 'crypto';
 import OAuth, { RequestOptions } from 'oauth-1.0a';
 import qs from 'qs';
+import { Config } from '..';
 
 import { ApiClient } from './client';
 
 export class UserClient extends ApiClient {
   private oAuthClient: OAuth;
 
-  // TODO(jayhelton) create options interface
-  constructor(public config: any) {
-    super(config.baseUrl);
+  constructor(public config: Config) {
+    super(config);
     this.oAuthClient = new OAuth({
       consumer: { key: config.apiKey, secret: config.apiSecretKey },
       signature_method: 'HMAC-SHA1',
@@ -54,7 +54,9 @@ export class UserClient extends ApiClient {
 
   public async getRequestToken(callbackUrl: string) {
     const params = { oauth_callback: callbackUrl };
-    const url = `${this.baseUrl}/oauth/request_token?${qs.stringify(params)}`;
+    const url = `${this.config.baseUrl}/oauth/request_token?${qs.stringify(
+      params
+    )}`;
     const headers = this.oAuthClient.toHeader(
       this.oAuthClient.authorize({
         url,
@@ -75,7 +77,9 @@ export class UserClient extends ApiClient {
     [k: string]: string;
   }) {
     const params = { oauth_verifier: oauthVerifier, oauth_token: oauthToken };
-    const url = `${this.baseUrl}/oauth/access_token?${qs.stringify(params)}`;
+    const url = `${this.config.baseUrl}/oauth/access_token?${qs.stringify(
+      params
+    )}`;
 
     const headers = this.oAuthClient.toHeader(
       this.oAuthClient.authorize({

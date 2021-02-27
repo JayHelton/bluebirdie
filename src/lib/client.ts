@@ -1,14 +1,14 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-//import * as AxiosLogger from 'axios-logger';
 import qs from 'qs';
 import { Observable } from 'rxjs';
+import { Config } from '..';
 
 export class ApiClient {
   protected client: AxiosInstance;
 
-  constructor(public baseUrl: string) {
+  constructor(protected config: Config) {
     const options = {
-      baseURL: baseUrl,
+      baseURL: this.config.baseUrl,
       // A nice abstraction so regular arrays can be provided for comma separated lists
       paramsSerializer(params: any) {
         const searchParams = new URLSearchParams();
@@ -26,20 +26,24 @@ export class ApiClient {
 
     this.client = axios.create(options);
 
-    // TODO let users define their own logger
-    // this.client.interceptors.request.use(request => {
-    //   return AxiosLogger.requestLogger(request, {
-    //     headers: true,
-    //   });
-    // });
-    // this.client.interceptors.response.use(response => {
-    //   return AxiosLogger.responseLogger(response, {
-    //     headers: true,
-    //   });
-    // });
+    if (config.requestLogger) {
+      this.client.interceptors.request.use(request => {
+        return config.requestLogger
+          && config.requestLogger(request)
+          || request;
+      });
+    }
+    if (config.responseLogger) {
+      this.client.interceptors.response.use(response => {
+        return config.responseLogger
+          && config.responseLogger(response)
+          || response;
+      });
+    }
+
   }
 
-  // TODO(jayhelton) have a better client interface for data and error handling
+  // TODO(jayhelton) have a better client interface for error handling
   public get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {
     return this.client.get<T>(url, config).then(res => res.data);
   }
@@ -95,7 +99,7 @@ export class ApiClient {
               try {
                 const json = JSON.parse(data);
                 subscriber.next(json);
-              } catch (e) {}
+              } catch (e) { }
             })
             .on('error', (error: { code: string }) => {
               subscriber.error(error);
@@ -122,7 +126,7 @@ export class ApiClient {
               try {
                 const json = JSON.parse(data);
                 subscriber.next(json);
-              } catch (e) {}
+              } catch (e) { }
             })
             .on('error', (error: { code: string }) => {
               subscriber.error(error);

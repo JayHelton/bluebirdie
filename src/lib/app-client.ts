@@ -1,9 +1,9 @@
+import { Config } from '..';
 import { ApiClient } from './client';
 
 export class AppClient extends ApiClient {
-  // TODO(jayhelton) create options interface
-  constructor(public config: any) {
-    super(config.baseUrl);
+  constructor(public config: Config) {
+    super(config);
 
     this.client.interceptors.request.use(request => {
       if (this.config.bearerToken) {
