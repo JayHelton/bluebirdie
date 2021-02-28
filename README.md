@@ -4,6 +4,9 @@
 
 <p align="center"> A lightweight wrapper for the Twitter API </p>
 
+![Twitter](https://img.shields.io/badge/Twitter-But%20Simple-blue?style=for-the-badge&logo=Twitter)
+[![npm (scoped)](https://img.shields.io/npm/v/bluebirdie?style=for-the-badge&logo=npm)](https://www.npmjs.com/search?q=bluebirdie)
+
 <hr/>
 
 > BlueBirdie is very new and still in it's **_experimental_** phase. Especially with the streaming. Until the 1.0 release, this library is highly likely to change. All parts of BlueBirdie are under construction.
