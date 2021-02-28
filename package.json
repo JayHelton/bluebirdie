@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "repository": "jayhelton/bluebirdie",
   "homepage": "https://jayhelton.github.io/bluebirdie",
-  "description": "A lightweight wrapper for Twitter's API",
+  "description": "A lightweight wrapper for the Twitter API",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
