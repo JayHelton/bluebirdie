@@ -6,6 +6,17 @@
   "homepage": "https://jayhelton.github.io/bluebirdie",
   "description": "A lightweight wrapper for the Twitter API",
   "license": "MIT",
+  "keywords": [
+    "twitter",
+    "api",
+    "twitter api",
+    "node twitter",
+    "twitter oauth",
+    "twitter authentication",
+    "twitter rest",
+    "twitter stream",
+    "twitter streaming"
+  ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
