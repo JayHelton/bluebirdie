@@ -2,7 +2,7 @@
 
 <h1 align="center"> BlueBirdie 🐦</h1>
 
-<p align="center"> A modern client for the Twitter API </p>
+<p align="center"> A lightweight wrapper for the Twitter API </p>
 
 <hr/>
 

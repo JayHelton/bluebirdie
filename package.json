@@ -1,10 +1,10 @@
 {
   "name": "bluebirdie",
   "author": "Jarrett Helton <jarrett.helton.dev@gmail.com>",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": "jayhelton/bluebirdie",
   "homepage": "https://jayhelton.github.io/bluebirdie",
-  "description": "A modern client for Twitter's API",
+  "description": "A lightweight wrapper for Twitter's API",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

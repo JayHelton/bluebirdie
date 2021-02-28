@@ -40,7 +40,10 @@ export class UserClient extends ApiClient {
             break;
           }
           default: {
-            if (request.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+            if (
+              request.headers['Content-Type'] ===
+              'application/x-www-form-urlencoded'
+            ) {
               params.data = qs.parse(request.data);
             }
             break;
