@@ -167,7 +167,6 @@ stream
 <ul>
   <li>Lots of test writing</li>
   <li>Better Exmaples</li>
-  <li>A Simpler Streaming API without 3rd party depedencies</li>
   <li>I am also brainstorming some ideas for easy abstractions on common use cases that would other be reimplemented in each project</li>
 </ul>
 
