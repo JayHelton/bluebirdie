@@ -1,7 +1,7 @@
 {
   "name": "bluebirdie",
   "author": "Jarrett Helton <jarrett.helton.dev@gmail.com>",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "repository": "jayhelton/bluebirdie",
   "homepage": "https://jayhelton.github.io/bluebirdie",
   "description": "A lightweight wrapper for the Twitter API",
